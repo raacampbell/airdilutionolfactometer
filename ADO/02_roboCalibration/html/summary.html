@@ -1,0 +1,390 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>summary</title><meta name="generator" content="MATLAB 7.10"><meta name="date" content="2010-07-29"><meta name="m-file" content="summary"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1></h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#3">Oct and MCH in the olfactometer</a></li><li><a href="#5">23rd</a></li><li><a href="#13">26/07/2010</a></li><li><a href="#23">27/07/2010</a></li><li><a href="#26">28/07/2010</a></li></ul></div><p>We set the PID gain to 5 and the offset to 2.78. Record MCH and octanol 6 times each. Then we want to match the absolute signal levels</p><pre class="codeinput"><span class="comment">%d=measureRobo(6)</span>
+<span class="comment">%save robo_20100721 d</span>
+
+<span class="comment">% Then again the next day.</span>
+
+<span class="comment">%d=measureRobo(6)</span>
+<span class="comment">%save robo_20100721 d d2</span>
+
+load  <span class="string">robo_20100721</span>
+roboPlot(d)
+</pre><img vspace="5" hspace="5" src="summary_01.png" alt=""> <pre class="codeinput">roboPlot(d2)
+</pre><img vspace="5" hspace="5" src="summary_02.png" alt=""> <h2>Oct and MCH in the olfactometer<a name="3"></a></h2><p>Vial 6 is octanol and Vial 7 is MCH We're at 0.166 odour rate</p><pre class="codeinput">load <span class="string">params_100722_163945.mat</span>
+plotResponseStability(params,1)
+</pre><img vspace="5" hspace="5" src="summary_03.png" alt=""> <p>I need a suspiciously high concentration of MCH in order to match what we saw in the t-maze. Here I have 1 ml of pure MCH at the bottom of the vial and aren't bubbling:</p><pre class="codeinput">load <span class="string">params_100722_172005</span>
+plotResponseStability(params,1)
+</pre><img vspace="5" hspace="5" src="summary_04.png" alt=""> <h2>23rd<a name="5"></a></h2><p>Clean a new robo-trainer. Add in the clean air vial. Let's check it out. There are some signals from the odour vials, but they are very weak. I set the gain to x10 and get readings around 0.2 V (I zeroed it first).</p><p>Now I will put 10 ml of odour into each vial and run it again. On this run, the PID wll be right at the exit nozzle of the valves. Set gain to 5 and zero with the air vial.</p><pre class="codeinput">load <span class="string">newRobo</span>
+<span class="comment">%d5=measureRobo(10);</span>
+roboPlot(d5)
+set(get(gcf,<span class="string">'children'</span>),<span class="string">'ylim'</span>,[0,1.5])
+</pre><img vspace="5" hspace="5" src="summary_05.png" alt=""> <p>Repeat with the gain at 10 (The offset is at 7.70), which is where it was when we recorded this in the e-room. Oops! Half of the MCH got sucked into the water tube. Nevertheless, I will continue.</p><pre class="codeinput"><span class="comment">%d10=measureRobo(10);</span>
+</pre><p>Now add the tube</p><pre class="codeinput"><span class="comment">%d10=measureRobo(10);</span>
+roboPlot(d10)
+roboPlot(dTube)
+ylim([0,1.5])
+set(get(gcf,<span class="string">'children'</span>),<span class="string">'ylim'</span>,[0,1.5])
+</pre><img vspace="5" hspace="5" src="summary_06.png" alt=""> <p>Let's see what the olfactometer produces</p><p>Set second dilution to 350/5000 (0.07, 1:14.3). So if it all works out, we'd need about 0.015 at the first point to get a 1:1000. It probably won't work out that way, however! It turns out we need about 0.75 or more to get a 1V PID signal. That seems crazy because it's only about a 1:15 dilution. The first needs ~0.6 ml/min to reach a voltage of 0.5:</p><pre class="codeinput">0.6 * 350/5350
+
+load <span class="string">calibOct1</span>
+plotCalibrationCurve(C)
+</pre><pre class="codeoutput">
+ans =
+
+    0.0393
+
+</pre><img vspace="5" hspace="5" src="summary_07.png" alt=""> <p>That's weird. To double-check this, I will repeat under different parameters to see how the numbers add up. I will set the second dilution to be 1/6 (so 1 LPM going into 5 LPM). The first needs ~0.2 ml/min to reach a voltage of 0.5. Good! They add up!</p><pre class="codeinput">0.2 * 1/6
+
+load <span class="string">calibOct2</span>
+plotCalibrationCurve(C2)
+</pre><pre class="codeoutput">
+ans =
+
+    0.0333
+
+</pre><img vspace="5" hspace="5" src="summary_08.png" alt=""> <p>We can plot one against the other and check we see a straight line</p><pre class="codeinput">clf
+plotCalibrationCurve(C,C2)
+stats=addFitLine;
+stats.b(2) <span class="comment">%slope</span>
+</pre><pre class="codeoutput">
+ans =
+
+    3.0323
+
+</pre><img vspace="5" hspace="5" src="summary_09.png" alt=""> <p>The dilution is actually. Hmm. It's not 3. Annoying.</p><pre class="codeinput">(1/6) / (350/5350)
+</pre><pre class="codeoutput">
+ans =
+
+    2.5476
+
+</pre><h2>26/07/2010<a name="13"></a></h2><p>We add in MCH, so that we now have MCH, octanol, and ethanol. All three have filter paper. There are 2 ml of MCH and octanol but 5 of ethanol. Deactive the first odour dilution and run conc series on these. Record at the end of the flow path. The time-courses look pretty horrible, but I'm hoping we'll be able to sort this out with the new final vales (which should arrive in 3 or 3 days). Gain is set to x10.</p><pre class="codeinput">load <span class="string">calibOctMCH</span>
+odour=[C3.odour];
+</pre><p>ethanol</p><pre class="codeinput">plotCalibrationCurve(C3(find(odour==5)));
+</pre><img vspace="5" hspace="5" src="summary_10.png" alt=""> <p>octanol</p><pre class="codeinput">plotCalibrationCurve(C3(find(odour==6)));
+</pre><img vspace="5" hspace="5" src="summary_11.png" alt=""> <p>MCH</p><pre class="codeinput">plotCalibrationCurve(C3(find(odour==7)));
+</pre><img vspace="5" hspace="5" src="summary_12.png" alt=""> <p>We see stange onset responses. There's a peak which drops down then rises again. I don't know why it's like that because it doesn't seem to be related to the previous odour presentation. Annoying.</p><p>Ok, we need to stick to the lower flow rates for this. So let's re-do it quickly.</p><pre class="codeinput">load <span class="string">calibOctMCH1</span>
+odour=[C4.odour];
+</pre><p>ethanol</p><pre class="codeinput">plotCalibrationCurve(C4(find(odour==5)));
+</pre><img vspace="5" hspace="5" src="summary_13.png" alt=""> <p>octanol</p><pre class="codeinput">plotCalibrationCurve(C4(find(odour==6)));
+subplot(2,1,1), stats=addFitLine;
+regSolveForX(stats,0.8) <span class="comment">%Approx.</span>
+</pre><pre class="codeoutput">
+ans =
+
+    0.1960
+
+</pre><img vspace="5" hspace="5" src="summary_14.png" alt=""> <p>MCH</p><pre class="codeinput">plotCalibrationCurve(C4(find(odour==7)));
+subplot(2,1,1), stats=addFitLine;
+regSolveForX(stats,1.05) <span class="comment">%Approx.</span>
+</pre><pre class="codeoutput">
+ans =
+
+    0.1716
+
+</pre><img vspace="5" hspace="5" src="summary_15.png" alt=""> <p>Ok, I think those numbers are good. It looks like at 0.25 ml/min I get about the correct values out from the MCH and octanol vials.</p><h2>27/07/2010<a name="23"></a></h2><p>Stick in a 1:1000 octanol vial in to the system to check that what I'm seeing is correct. i.e. that 1:4 dilution is what I'm looking for. (That's totally insane!).</p><p>Yes, it's insane. The following are done with only the first odour dilution in place.</p><pre class="codeinput">load <span class="string">octPureAndMix</span>
+</pre><pre class="codeinput"><span class="comment">%The diluted mixture would be about 0.15 V at 100% (I only tried 0.8 here)</span>
+plotCalibrationCurve(octPureAndMix(find([octPureAndMix.odour]==5)))
+</pre><img vspace="5" hspace="5" src="summary_16.png" alt=""> <p>The is corresponds to roughly 1:170</p><pre class="codeinput">t=(octPureAndMix(find([octPureAndMix.odour]==6)));
+<span class="comment">%get rid of the high end</span>
+t=t(find([t.flow]&lt;0.5));
+plotCalibrationCurve(t)
+subplot(2,1,1)
+
+stats=addFitLine;
+regSolveForX(stats,0.15) <span class="comment">%Approx.</span>
+</pre><pre class="codeoutput">
+ans =
+
+    0.0060
+
+</pre><img vspace="5" hspace="5" src="summary_17.png" alt=""> <h2>28/07/2010<a name="26"></a></h2><pre class="codeinput"><span class="comment">%so why is the signal from the robo-trainer so large?? Measure it</span>
+<span class="comment">%again, I suppose....</span>
+</pre><pre class="codeinput"><span class="comment">%save robo_100728 robo robo2</span>
+
+roboPlot([robo,robo2])
+</pre><img vspace="5" hspace="5" src="summary_18.png" alt=""> <p>This is annoying. Stuff is running down (well, either that or it's reaching it's true value or it's the PID head). The green is the air response. Let's clean it and replace the odours. Now we run it again.</p><pre class="codeinput"><span class="comment">%save robo_100728 robo robo2 robo3</span>
+
+roboPlot(robo3)
+</pre><img vspace="5" hspace="5" src="summary_19.png" alt=""> <p>So the MCH signal is about 3.5 V and the Octanol signal is about 0.5 V This is closer to what I was recording in the e-room.</p><p>Let's put these vials into the new odour delivery system and try to calibrate that.</p><pre class="codeinput"><span class="comment">%calib1=concSeries(AC) %like the others, this is blocked not randomised</span>
+save <span class="string">calibration_100728</span> <span class="string">calib1</span>
+
+plotCalib100728
+</pre><img vspace="5" hspace="5" src="summary_20.png" alt=""> <p>Awesome. So 75 ml/min will do the job!</p><p class="footer"><br>
+      Published with MATLAB&reg; 7.10<br></p></div><!--
+##### SOURCE BEGIN #####
+
+%%
+% We set the PID gain to 5 and the offset to 2.78. 
+% Record MCH and octanol 6 times each. Then we want to match the
+% absolute signal levels
+
+%d=measureRobo(6)
+%save robo_20100721 d
+
+% Then again the next day. 
+
+%d=measureRobo(6)
+%save robo_20100721 d d2
+
+load  robo_20100721
+roboPlot(d)
+%%
+roboPlot(d2)
+
+%% Oct and MCH in the olfactometer
+% Vial 6 is octanol and Vial 7 is MCH
+% We're at 0.166 odour rate
+load params_100722_163945.mat
+plotResponseStability(params,1)
+
+%%
+% I need a suspiciously high concentration of MCH in order to match
+% what we saw in the t-maze. Here I have 1 ml of pure MCH at the
+% bottom of the vial and aren't bubbling:
+load params_100722_172005
+plotResponseStability(params,1)
+
+
+%% 23rd 
+% Clean a new robo-trainer. Add in the clean air vial. Let's check
+% it out. There are some signals from the odour vials, but they are
+% very weak. I set the gain to x10 and get readings around 0.2 V (I
+% zeroed it first).
+%
+%%
+% Now I will put 10 ml of odour into each vial and run it
+% again. On this run, the PID wll be right at the exit nozzle of
+% the valves. Set gain to 5 and zero with the air vial. 
+load newRobo
+%d5=measureRobo(10);
+roboPlot(d5)
+set(get(gcf,'children'),'ylim',[0,1.5])
+%%
+% Repeat with the gain at 10 (The offset is at 7.70), which is where
+% it was when we recorded this in the e-room. Oops! Half of the MCH
+% got sucked into the water tube. Nevertheless, I will continue.
+%d10=measureRobo(10);
+
+%%
+% Now add the tube
+%d10=measureRobo(10);
+roboPlot(d10)
+roboPlot(dTube)
+ylim([0,1.5])
+set(get(gcf,'children'),'ylim',[0,1.5])
+%%
+% Let's see what the olfactometer produces
+%
+% Set second dilution to 350/5000 (0.07, 1:14.3). So if it all
+% works out, we'd need about 0.015 at the first point to get a
+% 1:1000. It probably won't work out that way, however!
+% It turns out we need about 0.75 or more to get a 1V PID
+% signal. That seems crazy because it's only about a 1:15
+% dilution. The first needs ~0.6 ml/min to reach a
+% voltage of 0.5:
+0.6 * 350/5350
+
+load calibOct1
+plotCalibrationCurve(C)
+
+%%
+% That's weird. To double-check this, I will repeat under different
+% parameters to see how the numbers add up. I will set the second
+% dilution to be 1/6 (so 1 LPM going into 5 LPM). The first needs ~0.2
+% ml/min to reach a voltage of 0.5. Good! They add up!
+0.2 * 1/6
+
+load calibOct2
+plotCalibrationCurve(C2)
+
+
+%%
+% We can plot one against the other and check we see a straight
+% line
+clf
+plotCalibrationCurve(C,C2)
+stats=addFitLine;
+stats.b(2) %slope
+
+%% 
+% The dilution is actually. Hmm. It's not 3. Annoying. 
+(1/6) / (350/5350)
+
+%% 26/07/2010
+% We add in MCH, so that we now have MCH, octanol, and ethanol. All
+% three have filter paper. There are 2 ml of MCH and octanol but 5
+% of ethanol. Deactive the first odour dilution and run conc series
+% on these. Record at the end of the flow path. The time-courses
+% look pretty horrible, but I'm hoping we'll be able to sort this
+% out with the new final vales (which should arrive in 3 or 3
+% days). Gain is set to x10.
+
+load calibOctMCH
+odour=[C3.odour];
+
+%%
+% ethanol
+plotCalibrationCurve(C3(find(odour==5)));
+%%
+% octanol
+plotCalibrationCurve(C3(find(odour==6)));
+%%
+% MCH
+plotCalibrationCurve(C3(find(odour==7)));
+
+%%
+% We see stange onset responses. There's a peak which drops down
+% then rises again. I don't know why it's like that because it
+% doesn't seem to be related to the previous odour
+% presentation. Annoying. 
+
+%%
+% Ok, we need to stick to the lower flow rates for this. So let's
+% re-do it quickly.
+
+load calibOctMCH1
+odour=[C4.odour];
+
+%%
+% ethanol
+plotCalibrationCurve(C4(find(odour==5)));
+%%
+% octanol
+plotCalibrationCurve(C4(find(odour==6)));
+subplot(2,1,1), stats=addFitLine;
+regSolveForX(stats,0.8) %Approx.
+
+%%
+% MCH
+plotCalibrationCurve(C4(find(odour==7)));
+subplot(2,1,1), stats=addFitLine;
+regSolveForX(stats,1.05) %Approx.
+
+%%
+% Ok, I think those numbers are good. It looks like at 0.25 ml/min
+% I get about the correct values out from the MCH and octanol
+% vials. 
+
+%% 27/07/2010
+% Stick in a 1:1000 octanol vial in to the system to check that what
+% I'm seeing is correct. i.e. that 1:4 dilution is what I'm looking
+% for. (That's totally insane!). 
+%
+% Yes, it's insane. The following are done with only the first
+% odour dilution in place. 
+
+load octPureAndMix
+
+%%
+%The diluted mixture would be about 0.15 V at 100% (I only tried 0.8 here)
+plotCalibrationCurve(octPureAndMix(find([octPureAndMix.odour]==5)))
+
+%%
+% The is corresponds to roughly 1:170
+t=(octPureAndMix(find([octPureAndMix.odour]==6)));
+%get rid of the high end
+t=t(find([t.flow]<0.5));
+plotCalibrationCurve(t)
+subplot(2,1,1)
+
+stats=addFitLine;
+regSolveForX(stats,0.15) %Approx.
+
+%% 28/07/2010
+%
+%so why is the signal from the robo-trainer so large?? Measure it
+%again, I suppose....
+%%
+%save robo_100728 robo robo2
+
+roboPlot([robo,robo2])
+%%
+% This is annoying. Stuff is running down (well, either that or
+% it's reaching it's true value or it's the PID head). The green is
+% the air response. Let's clean it and replace the odours. Now we
+% run it again. 
+%
+%save robo_100728 robo robo2 robo3
+
+roboPlot(robo3)
+%%
+% So the MCH signal is about 3.5 V and the Octanol signal is about
+% 0.5 V This is closer to what I was recording in the e-room. 
+
+%%
+% Let's put these vials into the new odour delivery system and try
+% to calibrate that. 
+%calib1=concSeries(AC) %like the others, this is blocked not randomised
+save calibration_100728 calib1
+
+plotCalib100728
+
+%%
+% Awesome. So 75 ml/min will do the job!
+
+
+##### SOURCE END #####
+--></body></html>

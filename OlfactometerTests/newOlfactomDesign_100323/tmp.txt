@@ -1,0 +1,43 @@
+
+
+
+
+
+
+
+
+I'll just do some MCH...
+Set PID to x1 and suction to low
+Set flow through the vial to 500 ml/min and stick it into #27 with the
+old (crappy) check valve and bubble. The MCH was freshly made today. 
+params\_100329\_184718.mat
+
+Sod. The gain had to be at x10, because that's what we used for
+e-room. Do it again...
+
+params\_100329\_185604.mat
+
+This is too low and we're getting a valve switching artefact
+
+TOMORROW:
+> Clean PID again. 
+Ok. cleaned with line from the wall. Dropped the bulb, but it's not
+cracked and the PID lit up straight away. Test with ethanol from 4 of
+vials. 6 reps each. Bubbling through each. Odour flow is 0.5/0.5
+WHY does it now look so bad? It was stationary before! Try dropping
+down to 0.25 ml/min. Yeah... so that looks better. 
+params\_100330\_121140.mat
+
+Try again at 0.2 ml/min but this time flush before hand
+
+
+> Try it at 900 ml/min (which is what it was in the e-room). 
+
+> Try the Oct and see if the intensity ratio is the same here. 
+
+> Maybe consider increasing the concentration in the tubes?
+
+> Do we have PID measurements from before?
+Yes, here: /home/rob/work/Insects/olfactoryStimuli/BubblingTest/
+But without knowing whether the PID was clean, they don't count for
+much. 

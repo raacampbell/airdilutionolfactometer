@@ -1,0 +1,26 @@
+12/03/2010
+
+Talk with Ashesh about odour delivery systems. 
+- It's possible we're getting odour sucked up the output tubes. This
+should be possible to stop simply by decreasing output tube diameter. 
+
+- He thinks the valve approach at the outputs may be good but that the
+valves might get crap in them over time. Using a proper MFC would help
+as this would counteract this. We may be restricted to using each
+valve for just one odour. 
+
+- He suggested that the bubbling may be forming an aerosol which is
+  depositing itself on the tubing. We can counteract this by either
+  using glass beads or by not bubbling. It's not clear what not
+  bubbling would do to the concentration. We'd need to test that. 
+
+- He found that one key for not getting pressure transients is to keep
+  flow going through valves to below 100 ml/min. 
+ 
+- He thought that 2-way valves may be more stable and reliable than
+  3-way valves. 
+
+- In their system back in India, they use pure odour in the vials and
+  inject small quantities of it into an carrier without adjusting for
+  flow when this is injected. By making this dilution ratio large, the
+  increase in air flow is small and so it doesn't present a problem. 

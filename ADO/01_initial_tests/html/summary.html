@@ -1,0 +1,261 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>Intro</title><meta name="generator" content="MATLAB 7.10"><meta name="date" content="2010-07-22"><meta name="m-file" content="summary"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>Intro</h1><!--introduction--><p>The ADO is the Air Dilution Olfactometer We will run some tests to make sure that all is ok.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">20/07/2010</a></li><li><a href="#2">Calibration curve (20/07/2010)</a></li><li><a href="#4">Repeatability (21/07/2010)</a></li><li><a href="#11">Within-vial stability</a></li><li><a href="#20">22/07/2010</a></li></ul></div><h2>20/07/2010<a name="1"></a></h2><p>There were some problems with bubbling through the ethanol and glass beads. I don't know why, but the signal was very weak. I have found that an odour vial with ethanol at the bottom and no bubbling gives a much better signal. There is also no problem with stuff being sucked up the wrong way. A big bonus. I will try to work without bubbling for now.</p><h2>Calibration curve (20/07/2010)<a name="2"></a></h2><p>First we want to generate a calibration curve: presenting a range of different odour concentrations at the first dilution point. We will just record the signal coming out of the manifolds. The data are generated using <tt>calibrationCurve</tt> and saved as <tt>calib_20100720</tt>. Everything has 5 ml of ethanol.</p><pre class="codeinput">load <span class="string">calib_20100720</span>
+plotCalibrationCurve(calib)
+</pre><img vspace="5" hspace="5" src="summary_01.png" alt=""> <p>It looks like a flow rate of 0.005 (5 ml) is coming through just fine.</p><h2>Repeatability (21/07/2010)<a name="4"></a></h2><p>Now we want to set up 12 ethanol vials and present odour from each. Do we see the same response from each vial? We will pick up the signals straight out of the in-line manifolds without going through the final valve at all. We run the first tests at 0.333 odour flow. We're presenting the odours in a randomised order.</p><p>The raw data look as follows</p><pre class="codeinput">load <span class="string">params_100721_120901.mat</span>
+plotResponseStability(params,1)
+</pre><img vspace="5" hspace="5" src="summary_02.png" alt=""> <p>But we want to look at the means</p><pre class="codeinput">clf
+plotResponseStability(params)
+</pre><img vspace="5" hspace="5" src="summary_03.png" alt=""> <p>Vials 8 and 3 are rather different from each other. It turned out that Vial 8 had the needles connected the wrong way around (green fat needle at input) and that Vial 3 had a suspect septum.</p><p>Fix the above and repeat. Now it looks good:</p><pre class="codeinput">load <span class="string">params_100721_123921</span>
+plotResponseStability(params)
+</pre><img vspace="5" hspace="5" src="summary_04.png" alt=""> <p>Now do 0.166 odour so that we can show how small the differences between vials really are. This is only a halving of odour concentration. Generally we would change concentration by a factor of 10.</p><pre class="codeinput">load <span class="string">params_100721_130233</span>
+hold <span class="string">on</span>
+plotResponseStability(params,0,{<span class="string">'or'</span>,<span class="string">'markerfacecolor'</span>,[1,0.5,0.5]})
+hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="summary_05.png" alt=""> <p>So the differences between vials really aren't very important.</p><h2>Within-vial stability<a name="11"></a></h2><p>Vial 1, below, has air being bubbled through the ethanol</p><pre class="codeinput">load <span class="string">params_100721_144658.mat</span>
+plotResponseStability(params,1)
+makeAxesEqual
+</pre><img vspace="5" hspace="5" src="summary_06.png" alt=""> <p>Not really what we hoped for. Vial 1 goes up in concentration during and between presentations. The others all go down. They all vary</p><p>Now we set up vial 1 to bubbles through the liquid. Vial 2 had beads. Vials 3 and 4 are only 5 ml of ethanol and no bubbling.</p><pre class="codeinput">load <span class="string">params_100721_145600.mat</span>
+plotResponseStability(params,1)
+makeAxesEqual
+</pre><img vspace="5" hspace="5" src="summary_07.png" alt=""> <p>The beads don't help!</p><p>Try a lower flow</p><pre class="codeinput"><span class="comment">%initialiseFlows(AC,0.05);</span>
+
+load <span class="string">params_100721_150235.mat</span>
+plotResponseStability(params,1)
+c=get(gcf,<span class="string">'children'</span>);makeAxesEqual(c(2:3))
+</pre><img vspace="5" hspace="5" src="summary_08.png" alt=""> <p>Nothing gets through the breads (note that axes are different). Note that the change in concentration of the ethanol is reversed.</p><p>Ethanol has a high vapour pressure. Let's try something different. We stick 1 ml of pentyl acetate in vial 4 and remove the bead vial. Run 6 reps of these three vials. Still at 50 ml/min.</p><pre class="codeinput">load <span class="string">params_100721_153626.mat</span>
+plotResponseStability(params,1)
+</pre><img vspace="5" hspace="5" src="summary_09.png" alt=""> <p>Do it again.</p><pre class="codeinput">load <span class="string">params_100721_154138.mat</span>
+plotResponseStability(params,1)
+c=get(gcf,<span class="string">'children'</span>);makeAxesEqual(c(2:3))
+</pre><img vspace="5" hspace="5" src="summary_10.png" alt=""> <p>This isn't so bad, really. Because we're actually going to be going from basline signal with the PID, these responses, especially the first one were we're bubbling. Will actually look rather good.</p><h2>22/07/2010<a name="20"></a></h2><p>Let's repeat the last thing we presented yesterday. We have waited over night, let's see how it looks. Again, the PID gain is at 5. Vial 1 is bubbling 5ml of pure ethanol, we're skipping the beads in 2, 3 has 5 ml of ethanol but we're not bubbling, 4 has 1 ml of pentyl acetetate.</p><pre class="codeinput"><span class="comment">%initialiseFlows(AC,0.05);</span>
+<span class="comment">%PID=deliverOdoursNew(AC,par,1);</span>
+load <span class="string">params_100722_104253</span>
+plotResponseStability(params,1)
+c=get(gcf,<span class="string">'children'</span>);makeAxesEqual(c(2:3))
+</pre><img vspace="5" hspace="5" src="summary_11.png" alt=""> <p>Then</p><pre class="codeinput"><span class="comment">%initialiseFlows(AC,0.166);</span>
+<span class="comment">%PID=deliverOdoursNew(AC,par,1);</span>
+
+<span class="comment">% that clips at gain=5, so I have decreased gain to x1</span>
+load <span class="string">params_100722_104722</span>
+plotResponseStability(params,1)
+c=get(gcf,<span class="string">'children'</span>);makeAxesEqual(c(2:3))
+</pre><img vspace="5" hspace="5" src="summary_12.png" alt=""> <p>Let's run it again:</p><pre class="codeinput">load <span class="string">params_100722_105440</span>
+plotResponseStability(params,1)
+c=get(gcf,<span class="string">'children'</span>);makeAxesEqual(c(2:3))
+<span class="comment">% It has to be said that bubbling produces the most consistent</span>
+<span class="comment">% results. That's a pity because it's potentially dangerous...</span>
+</pre><img vspace="5" hspace="5" src="summary_13.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.10<br></p></div><!--
+##### SOURCE BEGIN #####
+%% Intro  
+% The ADO is the Air Dilution Olfactometer
+% We will run some tests to make sure that all is ok. 
+
+%% 20/07/2010
+% There were some problems with bubbling through the ethanol and glass
+% beads. I don't know why, but the signal was very weak. I have found
+% that an odour vial with ethanol at the bottom and no bubbling gives a
+% much better signal. There is also no problem with stuff being sucked
+% up the wrong way. A big bonus. I will try to work without bubbling for
+% now. 
+
+%% Calibration curve (20/07/2010)
+% First we want to generate a calibration curve: presenting a range of
+% different odour concentrations at the first dilution point. We will
+% just record the signal coming out of the manifolds. The data are
+% generated using |calibrationCurve| and saved as |calib_20100720|. 
+% Everything has 5 ml of ethanol.   
+load calib_20100720
+plotCalibrationCurve(calib)
+%%
+% It looks like a flow rate of 0.005 (5 ml) is coming through just
+% fine. 
+
+
+%% Repeatability (21/07/2010)
+% Now we want to set up 12 ethanol vials and present odour from each. Do
+% we see the same response from each vial? We will pick up the signals
+% straight out of the in-line manifolds without going through the final
+% valve at all. We run the first tests at 0.333 odour flow. We're
+% presenting the odours in a randomised order. 
+
+%%
+% The raw data look as follows
+load params_100721_120901.mat  
+plotResponseStability(params,1)
+
+%%
+% But we want to look at the means
+clf
+plotResponseStability(params)
+
+%%
+% Vials 8 and 3 are rather different from each
+% other. It turned out that Vial 8 had the needles connected the wrong
+% way around (green fat needle at input) and that Vial 3 had a suspect
+% septum. 
+
+%%
+% Fix the above and repeat. Now it looks good:
+load params_100721_123921
+plotResponseStability(params)
+
+%%
+% Now do 0.166 odour so that we can show how small the differences
+% between vials really are. This is only a halving of odour
+% concentration. Generally we would change concentration by a
+% factor of 10. 
+load params_100721_130233
+hold on
+plotResponseStability(params,0,{'or','markerfacecolor',[1,0.5,0.5]})
+hold off
+
+%%
+% So the differences between vials really aren't very important. 
+
+%% Within-vial stability
+% Vial 1, below, has air being bubbled through the ethanol
+load params_100721_144658.mat  
+plotResponseStability(params,1)
+makeAxesEqual
+
+%%
+% Not really what we hoped for. Vial 1 goes up in concentration
+% during and between presentations. The others all go down. They
+% all vary
+%%
+% Now we set up vial 1 to
+% bubbles through the liquid. Vial 2 had beads. Vials 3 and 4 are
+% only 5 ml of ethanol and no bubbling.
+load params_100721_145600.mat
+plotResponseStability(params,1)
+makeAxesEqual
+%%
+% The beads don't help!
+
+%% 
+% Try a lower flow
+%initialiseFlows(AC,0.05);
+
+load params_100721_150235.mat  
+plotResponseStability(params,1)
+c=get(gcf,'children');makeAxesEqual(c(2:3))
+%%
+% Nothing gets through the breads (note that axes are
+% different). Note that the change in concentration of the ethanol
+% is reversed. 
+
+%%
+% Ethanol has a high vapour pressure. Let's try something
+% different. We stick 1 ml of pentyl acetate in vial 4 and remove the bead
+% vial. Run 6 reps of these three vials. Still at 50 ml/min. 
+load params_100721_153626.mat 
+plotResponseStability(params,1)
+
+%%
+% Do it again. 
+load params_100721_154138.mat
+plotResponseStability(params,1)
+c=get(gcf,'children');makeAxesEqual(c(2:3))
+%%
+% This isn't so bad, really. Because we're actually going to be
+% going from basline signal with the PID, these responses,
+% especially the first one were we're bubbling. Will actually look
+% rather good. 
+
+
+%% 22/07/2010
+% Let's repeat the last thing we presented yesterday. We have
+% waited over night, let's see how it looks. Again, the PID gain is
+% at 5. Vial 1 is bubbling 5ml of pure ethanol, we're skipping the
+% beads in 2, 3 has 5 ml of ethanol but we're not bubbling, 4 has 1
+% ml of pentyl acetetate. 
+
+%initialiseFlows(AC,0.05);
+%PID=deliverOdoursNew(AC,par,1);
+load params_100722_104253
+plotResponseStability(params,1)
+c=get(gcf,'children');makeAxesEqual(c(2:3))
+%%
+% Then 
+%initialiseFlows(AC,0.166);
+%PID=deliverOdoursNew(AC,par,1);
+
+% that clips at gain=5, so I have decreased gain to x1
+load params_100722_104722
+plotResponseStability(params,1)
+c=get(gcf,'children');makeAxesEqual(c(2:3))
+%%
+% Let's run it again:
+
+load params_100722_105440
+plotResponseStability(params,1)
+c=get(gcf,'children');makeAxesEqual(c(2:3))
+% It has to be said that bubbling produces the most consistent
+% results. That's a pity because it's potentially dangerous...
+
+##### SOURCE END #####
+--></body></html>

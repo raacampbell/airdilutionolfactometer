@@ -1,0 +1,89 @@
+
+N-Research valve is set up. Clean air in NO port and stock ethoh in
+neighbouring port. We do a range of carrier flows at a range of
+concentrations:
+
+flowMatrix1
+flowMatrix2
+
+Ok, so it looks linear at first and then it decelatetes. 
+flowMatrix_anem_1
+
+Try a wider range of different flows:
+flowMatrix_anem_2
+
+
+This is odd:
+a. The flow during the odour is higher than the flow before the
+odour. 
+b. The flow rate can take a long time to equilibrate. 
+c. The baseline flows are variable. 
+
+Shit. 
+
+I'll start by pumping a range of different flow combinations through
+air vial to see what happens.
+
+flowMatrix_cleanOnly_1
+
+
+It seems that the flow rate through the carrier path is lower than the
+rate from a vial. Hmph. 
+
+Ok, there were two problems:
+1. The flow out of MFC D (carrier) was low because the tube coming
+from that MFC was not secure. It was only deliverying 0.7 l/min. 
+2. The odour path was also low and working strangely because there was
+leakage in the line. 
+
+So everything is now working well. I'll record the flow matrix again. 
+This recording has air going through only the clean air vial and the
+carrier. We try a range of different ratios of clean air and
+carrier. The should all have the same flow. That's good. 
+
+flowMatrix_cleanOnly_2
+Now I want to try injecting progressively larger absolute quantities
+of air through the air vial into the carrier:
+
+flowMatrix_cleanOnly_3
+Awesome. Very linear. With different slopes. Try a few more carrier
+flows. 
+flowMatrix_cleanOnly_4
+
+Now we can try odour again! (Ignore the "cleanOnly"!)
+
+flowMatrix_cleanOnly_5
+
+Bollocks. Somehow we developed a bad reflux into the tube above the
+odour valves. Presumbably the NR valves were open with not enough
+positive pressure going into the valve. I bet it was the really low
+odour concentrations I was trying. 
+
+I have left it over-night but I think there is still some odour in the
+clean air part of the system. Although air bubbles through odour at
+0.025 and 0.01, I'm not seeing a response. 
+
+flowMatrix_cleanOnly_6
+
+I don't think anything is left in the system, but I can't pick up
+flows <= 0.025. I will try not bubbling...
+
+
+flowMatrix_noBubble_1
+I tried not bubbling. If the flow rate is too great, we see nasty
+kinetics. But Still no 0.01 dilution. I think this one is backing up. 
+
+flowMatrix_bubble_1
+This looks way better.
+
+Now let's try adding some glass beads
+
+flowMatrix_bubbleBeads_1
+10 ml of odour and the rest is beads. So beads are half way up the
+vial. 
+
+Now we put glass beads into the 1:100 dilution and measure that. 
+flowMatrix_bubbleBeads_1in100
+This looks way worse. Really not as nice. 
+
+

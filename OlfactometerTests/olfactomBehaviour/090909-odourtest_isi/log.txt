@@ -1,0 +1,8 @@
+
+
+Try different ISIs. 
+How long does it need to be for the control vial to be giving us
+"nothing"
+
+
+We'll try 20s, 40s, and 60s

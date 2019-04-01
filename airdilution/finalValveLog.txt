@@ -1,0 +1,56 @@
+
+5/5/2010
+
+We now set about the plans for the final valve. 
+We will try setting it after the 100 ml split so that we are gating
+small quantities of odour. 
+
+First we pipe about 4.5 SLPM of air to the wind detector and add 1 sec
+pulses of varying wind speeds from a 3-way valve. 
+
+out=valveTransient(AC)
+save valveTransient1 out
+analyseValveTransient(out)
+
+So there's a noticeable dip in the windspeed even at 0.05. 
+
+
+
+I'll now pass it through a second controller to go down to about 1,000
+ml/min. Using a short green needle to vent the rest of the gas. Even
+the pink create too much pressure and lead to artefacts.
+
+OK. Nice. That actually looks better (not saved). Next I will try
+adding a pair if valves and flipping them in antiphase to see if we
+can get rid of the transient completely.
+
+
+save valveTransient2 out
+Wow! There's basically no transient at all now. I like!
+
+----------------
+
+Ok. Now I need to check that the odour flow injection at the 5 SLPM
+dilution is indeed linear and reasonable. 
+
+So I inject different flows into ~ 5 SLPM using the alicat. There are
+2 3-way valves (one for odour and one for clean air) for the final
+valve. We are injecting through the clean air 3-way via the alicat.
+
+bigDilution1:
+analyseEthanol(out)
+
+It looks linear to me and it goes through zero. 
+
+
+Now I will try to work out how large the signal is through the tap. 
+save bigDilution2 out
+
+In principle, this looks good. 
+
+Now I will try to equalise 100 ml through the alicat clean air with
+the 100 ml through the tap. 
+
+
+
+20/5/2010

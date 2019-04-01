@@ -1,0 +1,106 @@
+We are going to try to do small air dilutions using the old-fashioned
+tubing .
+
+1/16 " ID tubing.
+
+data_1
+
+MFC D at a range of different flows. 
+
+Next we plumb in MFC C with a T and will first re-calibrate D. 
+
+data_2:
+looks very similar. 
+
+
+data_3
+Set MFC D to 1 l/min and inject progressively larger flows into the
+tube via the side arm of a T. Now this looks wondefully linear at 0 to
+500 ml/min injection flow. 
+
+Let's focus into the very low flow range:
+data_4
+Looks really quite nice at 0:0.002:0.1 
+I'll run it again with a longer acq period so that I can get a
+smoother curve: data_5
+
+data_6
+How reproducible is a 0.01 injection?
+The 0.01 is substantially higher than the 0. So I think we're good
+with the 1:100 dilution. 
+
+
+data_7
+Now what does the 1 ml injection look like?
+Now we put 5 to 10 ml of water in the bottom of the vial and attach a
+tube going through it. Measure again. We appear to get a nice signal
+but it's smaller than when we don't have the water. 
+
+So I'll generate a calibration curve for vial and water+vial. Then I
+can compare those to the T piece. 
+
+data_8: even through the tube in the water, the signal is linear. Now
+we do it out of the water and we can compare the slopes. 
+data_9: With the tube going through the water in tube removed. 
+The fits are basically identitcal. 
+
+data_10:
+I shall do it again but this time I will place teflon tape around the
+needle, so that the fit is tight onto the teflon tube. 
+
+
+data_11 Right. Now the PID detects the odour.  This looks pretty nice,
+although the lower flow rates do take WAY long to peak. I'll run it
+again but present for longer and only go up to about 5 ml/min
+
+data_12
+This is looking nice. 
+
+
+_______________________________________________________________
+I bet we'll be able to do the 1:1000 using air. So now I will check
+what is the PID response to:
+pure water
+1:1000 eth/water
+1:100 eth/water
+1:10 eth/water
+stock ethanol
+
+I will do this using:
+250 ml/min carrier comparied to 250 ml/min through the odour vial and
+1 ml/min through the carrier. 
+
+1. waterVial.mat
+dissapointingly, there's a fairly large response when we go through
+the water vial. The PID flow rate is set to low and the gain at x1. 
+
+etho_1in1000
+Bigger signal. We have some odour backing up towards the clean air MFC
+
+etho_1in100
+
+etho_1in10
+
+etho_pure
+Have corrected the backing up by flushing the clean air line before
+acquiring data. 
+
+So now we can try air dilutions up to 1:100 using the pure ethanol
+with a total flow rate at 250 ml/min. Although at 0.0025 I don't see
+many bubbles...
+
+
+eth_airdilution 
+
+Right, now we can compare these things:
+compareLiquidAir.m
+The air dilutions (black stars) are lower than the comparable liquid
+dilutions (at least for this 0.25 l/min flow). But this 1/4 of the
+flow that we'd normally use for the air. 
+
+
+
+
+-----
+Bottom line is that it's possible to do really tiny air dilutions with
+this tubing set up

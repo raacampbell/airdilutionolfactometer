@@ -1,0 +1,39 @@
+
+How to set up an air dilution with fixed flow to vacuum using an
+Alicat MFC. 
+
+e.g. say we want 1 SLPM into the system, 950 ml to vac and 50 ml to
+the rest of the system. 
+
+To calibrate the needle valve, connect as follows:
+
+MFC -> needle valve -> strong vacuum
+
+The flow will be choked at the needle valve and provide stable flow
+upstream of the needle valve irrespective of what happens downstream. 
+
+Set the MFC to loop pressure and use the local set point feature to
+adjust pressure to 14.7 PSIA (sea level). On the main screen of the
+Alicat, read off the volumetric flow rate (bottom left) and turn the
+needle valve until 950 ml/min flows. Now return to volumetric flow
+under non-local control (serial or analogue) and plumb in the t-piece:
+
+MFC -> needle valve -> strong vacuum
+    |
+    -> rest of system
+
+
+Now set MFC to 1 SLPM. 950 ml/min will go to vacuum and 50 ml/min will
+go to the rest of the system. Cool, huh?
+
+
+
+
+
+This can be confirmed with a nice alicate flow meter:
+
+                                   A: flow meter ---> atmosphere                       
+                                 /
+MFC ->  -------> common port3WAY -- B: needle valve -> strong vacuum
+    |
+    -> rest of system

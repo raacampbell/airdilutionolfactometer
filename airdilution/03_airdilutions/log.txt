@@ -1,0 +1,142 @@
+<html>
+
+<head>
+<title>Odour dilutions</title>
+</head>
+
+<body>
+<h3>16/06/2010</h3>
+The system is mostly set up and we have a load of new Alicat MFCs. 
+
+I think I've set up all the flows correctly but I'm stuck because the
+second odour dilution is giving me only about 1:50 not 1:100. 
+see: dilutionCompare_100615.mat
+
+flowMatrix_bubbleBeads_1
+10 ml of odour and the rest is beads. So beads are half way up the
+vial. 
+
+Now we put glass beads into the 1:100 dilution and measure that. 
+flowMatrix_bubbleBeads_1in100
+This looks way worse. Really not as nice. 
+
+
+------------------
+
+<h3>17/06/2010</h3>
+
+
+flipValve(11,1) %allow air through air vial
+setFlow(AC,0.5,'AB') %1 LPM total flow. 
+%Record flow data for 10 seconds at output of odour vials. 
+output=pollFM(AC,'G',0.2,5*10);
+hist([output.volumetricFlow])
+mean is 1.02. So that's fine. 
+
+Now we measure flow after the first suction point. 
+It's exhibiting some weird things but the mean is 0.08 (needle1)
+This is saw-toothing. 
+
+Now we measure at the end of the second needle valve point but with
+the flow set up as before (with 1 LPM going into the first needle
+valve). The mean of needle2a is 0.98 LPM. 
+
+Now I will close the tap feeding olfactometer air to the second needle
+valve and run again. Argh, it also saw-tooths: needle2b
+
+Now I'll remove the second needle valve and see how the 5 LPM air flow
+responds with the ~70 ml/min injected into it. 
+
+needle2c: So this is measuring the output straight from the Aalborg
+5SLPM. Stable
+
+Now open the valve adding flow from the first needle valve and see what we add:
+needle2d
+
+It appears to be adding only about 20 ml, which isn't right
+
+save test1 needle* output
+
+One last thing. Does the oscilation go away if the MFC doesn't go via
+the olfactimeter? Yes, it still happens: direct.mat. It changes by
+about 10 ml/min
+
+Let's do some more checks. 
+Ok, now I set B to loop pressure and see the flow through the first
+needle valve: directPressureLoop2.mat It's stationary. 
+directPressureLoop2.mat
+
+Now:
+MFCB -> needle
+     -> FM
+Signal at FM is not stationary: directPressureLoop_3.mat
+It's saw-toothing and, what's more, it's doing it in discrete steps. 
+
+directPressureLoop_4 is as _3 but we're measuring the parameters of
+the MFC not the FM. Yes, I see it there too. The pressure in both 3
+and 4 are good (static).
+
+
+Ok. I set the first needle valve to 0.044 (mean, it saw-tooths). When
+I inject this into either 1 SLPM or 4.9 SLPM I see an increased flow
+of 39 - 40 LPM. Good! 
+
+Now do the second odour dilution. 
+
+***
+Saw tooths seem to come from pressure build-ups. When the system is
+connected to a flow meter I see volume and mass flow oscilations in
+the flow meter and in the mass flow of the MFC. I don't see them in
+the volumetric flow. If I disconnect the meter, the fluctuations in
+the mass flow go away. 
+
+oscilationExplanation.mat
+
+I have checked the flows (above) and as far as I can tell, they add up
+as they should. So I really am injecting 50ml in to 5000ml. I will now
+record (AGAIN!) with the PID. First at the output of the odour
+delivery system where flow is at 1 LPM, and again at the output of the
+whole system where I should be getting 1/100 of that value. 
+
+diltutionTest.mat
+
+Righto. Now we need to confirms that we really did add 50 ml to 5 L. 
+I'm pretty sure that I'm producing about 42-53 ml from the first
+needle valve. So I'll measure flow rate at the second with the tap
+open and closed.
+
+secondDirect - Connect 5SLPM meter to 5LPM flow controller to see how
+much flow we get. It seems pretty stable at 5.57 (don't know why it's
+not 5, that's where the controller is (4.9). 
+
+secondNeedle - Connect 5SLPM meter to needle valve and 5LPM flow
+controller. So now we're seeing what flow rates we'd see without
+adding the odour dilution. This will oscilate. 
+
+Now we add in the odour:
+secondNeedlePlusOlf 
+
+I think I'm getting about 24 ml/min of extra flow here. 
+save diltutionCheck_1706 secondDirect secondNeedle secondNeedlePlusOlf
+
+
+That's a dilution of about 1.14/0.096
+
+<hr />
+
+<h3>21/06/2010</hr3>
+First good thing: I need to remember that the needle valves are
+subtractions not divisions. So if 5 LPM is going in and 4 is going to
+vac then I get 1. But if I inject an extra 50 ml then all the extra 50
+ml will go to me. It won't be divided 4/5 to vac and 1/5 to me (as the
+odour dilution is). 
+
+Second good thing: the fat in-line valves allow me to try a range of
+different odour dilutions. The resulting calibration curve is
+non-linear and I can easily measure it. 
+
+<img src="calibration_0621.png" />
+
+See dilutionsGood and calibrations2106
+</body>
+</html>
