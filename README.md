@@ -12,6 +12,10 @@ I can potentially upload more information if time permits.
 If you decide to build a similar device, I highly recommend you purchase a PID (see below). 
 It's expensive, but you won't know what the olfactometer is really doing unless you measure it with a PID. 
 
+<img src="https://github.com/raacampbell/airdilutionolfactometer/blob/master/photos/ADO_top.jpg">
+<img src="https://github.com/raacampbell/airdilutionolfactometer/blob/master/photos/ADO_side.jpg">
+
+
 ## Glossary
 - PID - mini photoionisation detector This device registers the presence of odourants in air. It works by breaking up the molecules, creating ions, then measuring the resulting current through the air. Signal strength varies by odor. 
 - MFC - mass flow controller
