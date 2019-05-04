@@ -7,10 +7,10 @@ The olfactometer was optimized for producing crisp and fairly square odor stimul
 The design I used had 8 vials plus a clean air control vial. 
 
 I'm afraid the notes in this repository are very disorganised, but at least they are now finally on-line. 
-If you have questions, please file an issue (so other's can benefit) and I'll answer them. 
+If you have questions, please file an issue (so others can benefit). 
 I can potentially upload more information if time permits. 
 If you decide to build a similar device, I highly recommend you purchase a PID (see below). 
-It's expensive, but you won't know what the olfactometer is really doing unless you measure it with a PID. 
+It's expensive, but you won't know what the olfactometer is really doing unless you measure its output with a PID. 
 
 <img src="https://github.com/raacampbell/airdilutionolfactometer/blob/master/photos/ADO_top.jpg">
 <img src="https://github.com/raacampbell/airdilutionolfactometer/blob/master/photos/ADO_side.jpg">
@@ -45,3 +45,6 @@ The final valve was the shuttle valve. For it to work well the flow to vacuum ha
 
 
 I lack a good characterization of the final design, as once it started working well I began doing experiments. 
+
+## Also see
+* [alicat-matlab](https://github.com/raacampbell/alicat-matlab) routines for controlling Alicat flow controllers n MATLAB.
