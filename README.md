@@ -47,4 +47,4 @@ The final valve was the shuttle valve. For it to work well the flow to vacuum ha
 I lack a good characterization of the final design, as once it started working well I began doing experiments. 
 
 ## Also see
-* [alicat-matlab](https://github.com/raacampbell/alicat-matlab) routines for controlling Alicat flow controllers i  n MATLAB.
+* [alicat-matlab](https://github.com/raacampbell/alicat-matlab) routines for controlling Alicat flow controllers in MATLAB.
